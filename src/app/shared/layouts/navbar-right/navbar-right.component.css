@@ -1,0 +1,49 @@
+.navbar {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 250px;
+  right: 0;
+  width: calc(100% - 250px);
+  border: 0px !important;
+  background-color: #f5f7fa !important; /* White for navbar */
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); Subtle shadow for depth */
+}
+
+/* Ensure the dropdown menu is visible when `showLogout` is true */
+.dropdown-menu {
+  min-width: 150px;
+  border-radius: 5px;
+  /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); */
+  display: block; /* Ensure it's displayed when toggled */
+}
+
+/* Make the dropdown button look good */
+.btn-outline-primary {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 50px;
+}
+
+.navbar .dropdown-item {
+  font-size: 0.9rem;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: #e2e6ea; /* Subtle hover effect */
+}
+
+.navbar .btn-outline-primary {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 20px; /* Rounded button */
+  transition: all 0.3s ease;
+}
+
+.navbar .btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}

@@ -1,0 +1,44 @@
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  background-color: white !important;
+  color: #495057; /* Dark gray text */
+  padding: 20px;
+  border-right: 1px solid #dee2e6; /* Thin border for separation */
+}
+
+/* Add background color to the menu area */
+.sidebar .nav {
+  border-radius: 8px; /* Rounded corners for the menu */
+  padding: 10px; /* Padding inside the menu container */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); Subtle shadow for menu area */
+}
+
+/* Menu items */
+.sidebar .nav-link {
+  color: #495057; /* Dark gray text */
+  font-size: 0.95rem;
+  padding: 20px;
+  border-radius: 35px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.sidebar .nav-link:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  color: #fff; /* Ensure text remains white */
+  text-decoration: none;
+}
+
+/* Sidebar active menu item */
+.sidebar .nav-item.active .nav-link {
+  background-color: #007bff; /* Blue background for active item */
+  color: #fff; /* White text for active item */
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+

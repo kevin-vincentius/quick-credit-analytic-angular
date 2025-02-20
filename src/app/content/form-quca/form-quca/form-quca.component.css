@@ -1,0 +1,261 @@
+/* Layout */
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  /* margin-top: 20px; */
+  background: white !important;
+}
+
+.menu-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: left;
+  background: #0066cc;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.menu-button.secondary {
+  background: #e0e0e0;
+  color: black;
+}
+
+.content {
+  flex: 1;
+  /* background-color: white !important;  */
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+/* Form Section */
+
+.score-info {
+  display: flex;
+  align-items: center;
+}
+
+.score-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.score-description {
+  margin-left: 15px;
+}
+
+.recommended {
+  color: green;
+}
+
+.no-dp {
+  color: orange;
+}
+
+.not-recommended {
+  color: red;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.mid-input {
+  /* flex: 1; */
+  width: 30% !important;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.text-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.search-button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  color: white;
+  background-color: #0056b3;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.disabled-search-button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  color: white;
+  background-color: darkgrey;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Info Sections */
+.info-section {
+  margin-top: 20px;
+  margin: 15px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  /* background-color: green; */
+}
+
+.info-box {
+  flex: 1;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.info-box label {
+  font-weight: bold;
+  display: block; /* This makes sure the label is on top of the input */
+  margin-bottom: 5px; /* Adds space between the label and the input */
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+.info-box input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.info-box p {
+  margin: 5px 0 0;
+}
+
+.form-container {
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  flex: 1 !important; /* Ensures each form-group takes equal space */
+}
+
+.form-group label,
+.form-money-group label {
+  font-size: 1rem;
+  color: #555;
+  display: block !important;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-money-row {
+  display: flex;
+  justify-content: space-between; /* Distributes the items evenly */
+  gap: 20px; /* Adds space between the items */
+}
+
+.form-money-group {
+  margin-bottom: 20px;
+  flex: 1 !important; /* Ensures each form-group takes equal space */
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center; /* Align buttons to the left and right */
+  margin-top: 20px; /* Add some spacing if needed */
+  gap: 20px;
+}
+
+.action-button {
+  padding: 12px;
+  width: 10%;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  opacity: 0.9; /* Add some hover effect */
+}
+
+.btn-success {
+  background-color: #28a745;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+.submit-button:hover {
+  background-color: #0056b3;
+}

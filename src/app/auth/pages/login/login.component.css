@@ -1,0 +1,18 @@
+.logo-img {
+  max-width: 100%; /* Ensures the image is responsive */
+  height: auto; /* Maintains aspect ratio */
+  display: block; /* Removes any extra spacing */
+  margin: 0 auto; /* Centers the image */
+  max-height: 150px; /* Adjust height limit as needed */
+  object-fit: contain; /* Ensures it scales properly */
+}
+
+.fixed-input {
+  max-width: 300px; /* Set a fixed width */
+  width: 100%; /* Ensure it remains responsive */
+  margin: 0 auto; /* Center the input field */
+}
+
+.login-btn {
+  width: 30%;;
+}

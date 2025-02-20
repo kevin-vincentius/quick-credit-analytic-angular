@@ -1,0 +1,100 @@
+src/app
+├── admin
+│   ├── admin-routing.module.ts
+│   ├── admin.module.ts
+│   └── pages
+│       ├── dashboard
+│       │   ├── dashboard.component.css
+│       │   ├── dashboard.component.html
+│       │   └── dashboard.component.ts
+│       ├── rights
+│       │   ├── rights.component.css
+│       │   ├── rights.component.html
+│       │   └── rights.component.ts
+│       └── user
+│           ├── user.component.css
+│           ├── user.component.html
+│           └── user.component.ts
+├── app-routing.module.ts
+├── app.component.css
+├── app.component.html
+├── app.component.spec.ts
+├── app.component.ts
+├── app.module.ts
+├── auth
+│   ├── auth-routing.module.ts
+│   ├── auth.module.ts
+│   └── pages
+│       └── signin
+│           ├── signin.component.css
+│           ├── signin.component.html
+│           └── signin.component.ts
+├── core
+│   ├── core.module.ts
+│   ├── interfaces
+│   │   ├── i-doc.ts
+│   │   ├── i-pagination.ts
+│   │   ├── i-repository.ts
+│   │   ├── i-signin.ts
+│   │   └── i-token.ts
+│   ├── models
+│   │   ├── doc.ts
+│   │   ├── repository.ts
+│   │   ├── signin.ts
+│   │   └── token.ts
+│   └── services
+│       ├── authentication.service.ts
+│       ├── base-http.service.ts
+│       ├── doc.service.ts
+│       ├── github.service.ts
+│       └── guard.service.ts
+├── docs
+│   ├── docs-routing.module.ts
+│   ├── docs.module.ts
+│   └── pages
+│       └── doc
+│           ├── doc.component.css
+│           ├── doc.component.html
+│           └── doc.component.ts
+├── github
+│   ├── github-routing.module.ts
+│   ├── github.module.ts
+│   └── pages
+│       └── repo-list
+│           ├── repo-list.component.css
+│           ├── repo-list.component.html
+│           └── repo-list.component.ts
+├── home
+│   ├── home-routing.module.ts
+│   ├── home.module.ts
+│   └── pages
+│       ├── about-us
+│       │   ├── about-us.component.css
+│       │   ├── about-us.component.html
+│       │   └── about-us.component.ts
+│       ├── contact-us
+│       │   ├── contact-us.component.css
+│       │   ├── contact-us.component.html
+│       │   └── contact-us.component.ts
+│       └── home
+│           ├── home.component.css
+│           ├── home.component.html
+│           └── home.component.ts
+└── shared
+    ├── components
+    │   └── message-validation
+    │       ├── message-validation.component.css
+    │       ├── message-validation.component.html
+    │       └── message-validation.component.ts
+    ├── layouts
+    │   ├── menu-app
+    │   │   ├── menu-app.component.css
+    │   │   ├── menu-app.component.html
+    │   │   └── menu-app.component.ts
+    │   └── menu-navigation
+    │       ├── menu-navigation.component.css
+    │       ├── menu-navigation.component.html
+    │       └── menu-navigation.component.ts
+    └── shared.module.ts
+
+29 directories, 68 files

@@ -1,0 +1,13 @@
+<app-sidebar *ngIf="authService.isLoggedIn()"></app-sidebar>
+<app-navbar-right *ngIf="authService.isLoggedIn()"></app-navbar-right>
+
+<div
+  class="content-container"
+  [ngStyle]="{
+    'margin-left': authService.isLoggedIn() ? '250px' : '0px',
+    'margin-top': authService.isLoggedIn() ? navbarHeight + 'px' : '0px',
+    padding: authService.isLoggedIn() ? '20px' : '0px'
+  }"
+>
+  <router-outlet></router-outlet>
+</div>

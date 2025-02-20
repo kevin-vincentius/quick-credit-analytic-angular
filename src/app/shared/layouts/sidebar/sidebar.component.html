@@ -1,0 +1,21 @@
+<div class="sidebar text-dark bg-light vh-100 position-fixed">
+  <div class="d-flex flex-column">
+    <img src="/img/logo.png" alt="Logo" class="logo-img" />
+    <nav class="nav flex-column">
+      <li
+        *ngFor="let item of menuItems"
+        class="nav-item mt-2 mb-2"
+        [ngClass]="{ active: item.route === currentRoute }"
+      >
+        <a
+          class="nav-link d-flex align-items-center ps-4"
+          [routerLink]="item.route"
+        >
+          <!-- Bootstrap Icon -->
+          <i [class]="item.icon + ' pe-2 ms-2'"></i> <!-- Icon is dynamically added -->
+          <span class="ps-2">{{ item.name }}</span>
+        </a>
+      </li>
+    </nav>
+  </div>
+</div>

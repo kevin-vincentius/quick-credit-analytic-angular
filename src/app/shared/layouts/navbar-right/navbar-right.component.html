@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand border navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-end align-items-center w-100">
+      <div class="dropdown">
+        <!-- Toggle button for the dropdown -->
+        <button
+          class="btn btn-outline-primary dropdown-toggle d-flex align-items-center"
+          type="button"
+          (click)="toggleLogout()"
+        >
+          <i class="bi bi-person-circle me-2"></i>
+          {{ namaLengkap }}
+        </button>
+
+        <!-- Use *ngIf to toggle visibility of the dropdown menu -->
+        <div *ngIf="showLogout" class="dropdown-menu dropdown-menu-end animate__animated animate__fadeIn">
+          <button class="dropdown-item text-danger" (click)="logout()">
+            <i class="bi bi-box-arrow-right me-2"></i> Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,23 @@
+<div
+  *ngIf="!field.valid && (field.dirty || field.touched)"
+  class="text-helper text-danger mt-2"
+>
+  <span *ngIf="field.errors!['required']">{{ label }} harus diisi</span>
+  <span *ngIf="field.errors!['email']">Invalid {{ label }}</span>
+  <span *ngIf="field.errors!['email']">Invalid {{ label }}</span>
+  <span *ngIf="field.errors!['minlength']">
+    {{ label }} minimum length is
+    {{ field.errors!["minlength"].requiredLength }}, but actual length is
+    {{ field.errors!["minlength"].actualLength }}.
+  </span>
+  <span *ngIf="field.errors!['maxlength']">
+    {{ label }} maximum length is
+    {{ field.errors!["maxlength"].requiredLength }}, but actual length is
+    {{ field.errors!["maxlength"].actualLength }}.
+  </span>
+  <span *ngIf="field.errors!['pattern']"> Invalid {{ label }} </span>
+</div>
+
+<div *ngIf="customError" class="text-helper text-danger mt-2">
+  {{ customError }}
+</div>

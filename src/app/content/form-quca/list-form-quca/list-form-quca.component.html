@@ -1,0 +1,69 @@
+<div class="container">
+  <h2>List Form Quick Credit Analytic</h2>
+  <div class="action-bar">
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Cari berdasarkan MID/ Nama Konsumen/ Nama Marketing Officer"
+        class="search-input"
+      />
+      <button class="search-button">🔍</button>
+    </div>
+    <button class="add-button" [routerLink]="['/form-quca/add']">
+      + Tambah
+    </button>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>MID</th>
+        <th>Nama Konsumen</th>
+        <th>Marketing Officer</th>
+        <th>Status</th>
+        <th>Tanggal</th>
+        <th>Hasil Skor</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="listForm.length > 0; else noData">
+      <tr *ngFor="let form of listForm">
+        <td>
+          <a
+            [routerLink]="['/form-quca/', form.mid?.mid]"
+            class="text-decoration-none"
+          >
+            {{ form?.mid?.mid }}</a
+          >
+        </td>
+        <td>{{ form?.mid?.namaKonsumen }}</td>
+        <td>
+          {{ form.mid.idMarketingOfficer.namaLengkap }}
+        </td>
+        <td>
+          <span
+            [ngClass]="{
+              'status-approved': form.statusQUCA === 'APPROVED',
+              'status-revision': form.statusQUCA === 'NEED REVISION',
+              'status-review': form.statusQUCA === 'ON REVIEW'
+            }"
+          >
+            {{ form.statusQUCA }}
+          </span>
+        </td>
+        <td>{{ form.createdAt | date : "yyyy/MM/dd" }}</td>
+        <td>{{ form.totalScore ?? '-' }}</td>
+      </tr>
+    </tbody>
+    <ng-template #noData>
+      <tr>
+        <td colspan="6" class="no-data">Belum ada form yang dibuat</td>
+      </tr>
+    </ng-template>
+  </table>
+
+  <div class="pagination">
+    <button class="pagination-button">◀</button>
+    <button class="pagination-button">▶</button>
+  </div>
+</div>

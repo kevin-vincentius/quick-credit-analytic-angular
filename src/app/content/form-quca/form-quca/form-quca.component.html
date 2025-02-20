@@ -1,0 +1,239 @@
+<!-- Main Content -->
+<div class="content">
+  <section class="form-container">
+    <h2>Form Quick Credit Analytic</h2>
+
+    <!-- Score Description -->
+    <div class="score-info">
+      <img src="assets/score-icon.png" alt="Score Icon" class="score-icon" />
+      <div class="score-description">
+        <p>Deskripsi Score:</p>
+        <p><span class="recommended">Score 3 - 4: RECOMMENDED</span></p>
+        <p><span class="no-dp">Score 2 - 3: NO DP PAKET</span></p>
+        <p>
+          <span class="not-recommended">Score 1 - 2: NOT RECOMMENDED</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- MID Search -->
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="mid"
+        class="mid-input"
+        [placeholder]="mid === undefined ? 'Masukkan MID' : mid"
+        [disabled]="isMidFromUrl"
+      />
+      <button
+        [ngClass]="{
+          'search-button': !isMidFromUrl,
+          'disabled-search-button disabled': isMidFromUrl
+        }"
+        (click)="getDataMID()"
+        [disabled]="isMidFromUrl"
+      >
+        Cari MID 🔍
+      </button>
+    </div>
+
+    <!-- Informasi MID -->
+    <h3>Informasi MID</h3>
+    <div class="info-section">
+      <div class="info-row">
+        <div class="info-box">
+          <label>Cabang</label>
+          <input
+            type="text"
+            placeholder="-"
+            [(ngModel)]="namaCabang"
+            class="text-input"
+            disabled
+          />
+        </div>
+        <div class="info-box">
+          <label>Domisili Konsumen</label>
+          <input
+            type="text"
+            [(ngModel)]="fullAddress"
+            class="text-input"
+            placeholder="-"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-box">
+          <label>Showroom</label>
+          <input
+            type="text"
+            [(ngModel)]="namaShowroom"
+            class="text-input"
+            placeholder="-"
+            disabled
+          />
+        </div>
+        <div class="info-box">
+          <label>Marketing Officer</label>
+          <input
+            type="text"
+            [(ngModel)]="namaMarketingOfficer"
+            class="text-input"
+            placeholder="-"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Informasi Konsumen -->
+    <h3>Informasi Konsumen</h3>
+    <div class="info-section">
+      <div class="info-box">
+        <label>Nama Konsumen</label>
+        <input
+          type="text"
+          [(ngModel)]="namaKonsumen"
+          class="text-input"
+          placeholder="-"
+          disabled
+        />
+      </div>
+
+      <!-- Mutasi Kredit, Jumlah Angsuran, Jumlah Pendapatan -->
+      <div class="info-box">
+        <div class="form-money-row">
+          <div class="form-group">
+            <label for="mutasiKredit">Mutasi Kredit</label>
+            <input
+              id="mutasiKredit"
+              type="text"
+              [(ngModel)]="tabungan"
+              placeholder="-"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="jumlahAngsuran">Jumlah Angsuran</label>
+            <input
+              id="jumlahAngsuran"
+              type="text"
+              [(ngModel)]="angsuran"
+              placeholder="-"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="jumlahPendapatan">Jumlah Pendapatan</label>
+            <input
+              id="jumlahPendapatan"
+              type="text"
+              [(ngModel)]="pendapatan"
+              placeholder="-"
+              disabled
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Kapasitas Section -->
+      <div class="form-group">
+        <label for="tabunganTerhadapAngsuran">Tabungan terhadap Angsuran</label>
+        <input
+          id="tabunganTerhadapAngsuran"
+          type="text"
+          placeholder="-"
+          [value]="tabThdAngsCategory"
+          disabled
+        />
+      </div>
+      <div class="form-group">
+        <label for="angsuranTerhadapPendapatan"
+          >Angsuran terhadap Pendapatan</label
+        >
+        <input
+          id="angsuranTerhadapPendapatan"
+          type="text"
+          placeholder="-"
+          [value]="angsThdPdptCategory"
+          disabled
+        />
+      </div>
+      <div class="form-group">
+        <label for="statusPekerjaan">Status Pekerjaan</label>
+        <select id="statusPekerjaan" [(ngModel)]="statusPekerjaan">
+          <option [value]="null">- Pilih Status Pekerjaan -</option>
+          <option [value]="1">Pegawai kontrak</option>
+          <option [value]="2">Freelance/ pengusaha UMKM</option>
+          <option [value]="3">Tetap sebagai staff</option>
+          <option [value]="4">Tetap sebagai atasan/ pengusaha besar</option>
+        </select>
+      </div>
+
+      <!-- Kondisi Tempat Tinggal -->
+      <div class="form-group">
+        <label for="statusTempatTinggal">Status Tempat Tinggal</label>
+        <select id="statusTempatTinggal" [(ngModel)]="statusTempatTinggal">
+          <option value="null">- Pilih Status Tempat Tinggal -</option>
+          <option value="1">Kontrak</option>
+          <option value="2">Milik kerabat bukan keluarga inti</option>
+          <option value="3">Milik keluarga inti</option>
+          <option value="4">Milik sendiri</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="kondisiTempatTinggal">Kondisi Tempat Tinggal</label>
+        <select id="kondisiTempatTinggal" [(ngModel)]="kondisiTempatTinggal">
+          <option value="null">- Pilih Kondisi Tempat Tinggal -</option>
+          <option value="1">Kumuh</option>
+          <option value="2">Rumah sederhana semi permanen</option>
+          <option value="3">Rumah sederhana permanen</option>
+          <option value="4">Mewah</option>
+        </select>
+      </div>
+
+      <!-- Karakter di Lingkungan & Hasil SLIK -->
+      <div class="form-group">
+        <label for="karakterLingkungan">Karakter di Lingkungan</label>
+        <select id="karakterLingkungan" [(ngModel)]="karakterDiLingkungan">
+          <option value="null">- Pilih Karakter di Lingkungan -</option>
+          <option value="1">Dikenal buruk</option>
+          <option value="2">Dikenal namun tertutup</option>
+          <option value="3">Dikenal biasa saja</option>
+          <option value="4">Dikenal baik</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="getContact">Get Contact</label>
+        <select id="getContact" [(ngModel)]="hasilGetContact">
+          <option value="null">- Pilih Jumlah Tagar Get Contact -</option>
+          <option value="1">Nihil/ dikunci/ kurang dari 5</option>
+          <option value="2">5 - 50 tagar</option>
+          <option value="3">50 tagar keatas</option>
+          <option value="4">50 tagar keatas dan positif</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="hasilSLIK">Hasil SLIK</label>
+        <select id="hasilSLIK" [(ngModel)]="hasilSLIK">
+          <option value="null">- Pilih Hasil SLIK by RBS -</option>
+          <option value="1">RBS Not OK karena coll2 keatas</option>
+          <option value="2">Not OK/ nihil/ under 15 juta/ prematur</option>
+          <option value="3">OK B20</option>
+          <option value="4">OK C10 dan D0</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Buttons for user levels -->
+    <div *ngIf="levelAkses !== 'CMO'" class="action-buttons">
+      <button class="btn btn-danger action-button" (click)="rejectForm()">Reject</button>
+      <button class="btn btn-primary action-button" (click)="approveForm()">Approve</button>
+    </div>
+
+    <!-- Submit Button -->
+     <div *ngIf="levelAkses === 'CMO'">
+       <button class="submit-button" (click)="submitFormQUCA()">Simpan</button>
+     </div>
+  </section>
+</div>

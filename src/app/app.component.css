@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa; /* Light gray-blue background */
+  color: #333; /* Text contrast */
+}
+
+html, body {
+  height: 100%;
+}
+
+.content-container {
+  margin-left: 250px; /* Sidebar width */
+  margin-top: 50px; /* Navbar height */
+  padding: 20px;
+  height: 100vh;
+  background-color: #f5f7fa; /* White content area */
+  border-radius: 8px; /* Smooth edges */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+}
+
