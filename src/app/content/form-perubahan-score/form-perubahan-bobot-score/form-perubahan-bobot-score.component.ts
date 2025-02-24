@@ -13,13 +13,13 @@ import { IScore } from '../../../core/interfaces/i-score';
 })
 export class FormPerubahanBobotScoreComponent {
   newBobotTabThdAngs: any = null;
-  newBobotAngsThdPdpt: number = 0;
-  newBobotStatusPekerjaan: number = 0;
-  newBobotStatusTempatTinggal: number = 0;
-  newBobotKondisiTempatTinggal: number = 0;
-  newBobotKarakter: number = 0;
-  newBobotHasilGetContact: number = 0;
-  newBobotHasilSLIK: number = 0;
+  newBobotAngsThdPdpt: any = null;
+  newBobotStatusPekerjaan: any = null;
+  newBobotStatusTempatTinggal: any = null;
+  newBobotKondisiTempatTinggal: any = null;
+  newBobotKarakter: any = null;
+  newBobotHasilGetContact: any = null;
+  newBobotHasilSLIK: any = null;
   listCabang: ICabang[] = [];
   selectedCabang: ICabang | null = null;
   scoreCabang: any = {
@@ -40,14 +40,13 @@ export class FormPerubahanBobotScoreComponent {
   statusFormPerubahan: string = '';
   showRejectModal: boolean = false; // To control the reject modal visibility
   showApproveModal: boolean = false; // To control the approve modal visibility
-  totalScore: number = 0;
+  totalScore: any = '-';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private scoreService: ScoreService,
     private authService: AuthenticationService,
-    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -193,7 +192,7 @@ export class FormPerubahanBobotScoreComponent {
       error: (err) => {
         console.error('error: ', err);
         if (err.status === 409) {
-          console.error('Ada form pengajuan pending untuk cabang ini');
+          alert('Ada form pengajuan pending untuk cabang ini');
           return;
         }
       },

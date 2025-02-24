@@ -4,7 +4,7 @@
     <h2>Form Quick Credit Analytic</h2>
 
     <!-- Wrapper untuk meter dan deskripsi -->
-    <div class="d-flex justify-content-center align-items-center mt-5 ">
+    <div class="d-flex justify-content-center align-items-center mt-5">
       <div class="flex items-center gap-4">
         <!-- Score Description -->
         <div class="row align-items-center">
@@ -17,10 +17,10 @@
               [ngClass]="{
                 'score-not-recommended': totalScore < 2,
                 'score-rwc': totalScore >= 2 && totalScore < 3,
-                'score-approved': totalScore >= 3
+                'score-approved': totalScore >= 3, 
               }"
             >
-              {{ totalScore }}
+              {{ totalScore ? totalScore : "-" }}
             </div>
           </div>
 
@@ -80,6 +80,16 @@
       >
         Cari MID 🔍
       </button>
+    </div>
+
+    <div
+      *ngIf="rejectNotes && statusQUCA !== 'APPROVED'"
+      class="reject-notes-section"
+    >
+      <h3>Catatan Reject dari BM</h3>
+      <div class="reject-notes-box">
+        <p>{{ rejectNotes }}</p>
+      </div>
     </div>
 
     <!-- Informasi MID -->
@@ -154,6 +164,7 @@
               id="mutasiKredit"
               type="text"
               [(ngModel)]="tabungan"
+              [value]="tabungan | currency : 'IDR' : 'symbol' : '1.0-0'"
               placeholder="-"
               disabled
             />
@@ -164,6 +175,7 @@
               id="jumlahAngsuran"
               type="text"
               [(ngModel)]="angsuran"
+              [value]="angsuran | currency : 'IDR' : 'symbol' : '1.0-0'"
               placeholder="-"
               disabled
             />
@@ -174,6 +186,7 @@
               id="jumlahPendapatan"
               type="text"
               [(ngModel)]="pendapatan"
+              [value]="pendapatan | currency : 'IDR' : 'symbol' : '1.0-0'"
               placeholder="-"
               disabled
             />
@@ -182,115 +195,147 @@
       </div>
 
       <!-- Kapasitas Section -->
-      <div class="form-group info-box">
-        <label for="tabunganTerhadapAngsuran">Tabungan terhadap Angsuran</label>
-        <input
-          id="tabunganTerhadapAngsuran"
-          type="text"
-          placeholder="-"
-          [value]="tabThdAngsCategory"
-          disabled
-        />
-      </div>
-      <div class="form-group info-box">
-        <label for="angsuranTerhadapPendapatan"
-          >Angsuran terhadap Pendapatan</label
-        >
-        <input
-          id="angsuranTerhadapPendapatan"
-          type="text"
-          placeholder="-"
-          [value]="angsThdPdptCategory"
-          disabled
-        />
-      </div>
-      <div class="form-group info-box">
-        <label for="statusPekerjaan">Status Pekerjaan</label>
-        <select
-          id="statusPekerjaan"
-          [(ngModel)]="statusPekerjaan"
-          [disabled]="levelAkses !== 'CMO'"
-        >
-          <option [value]="null">- Pilih Status Pekerjaan -</option>
-          <option [value]="1">Pegawai kontrak</option>
-          <option [value]="2">Freelance/ pengusaha UMKM</option>
-          <option [value]="3">Tetap sebagai staff</option>
-          <option [value]="4">Tetap sebagai atasan/ pengusaha besar</option>
-        </select>
-      </div>
+      <div>
+        <div class="form-group info-box">
+          <label for="tabunganTerhadapAngsuran"
+            >Tabungan terhadap Angsuran</label
+          >
+          <input
+            id="tabunganTerhadapAngsuran"
+            type="text"
+            placeholder="-"
+            [value]="tabThdAngsCategory"
+            disabled
+          />
+        </div>
+        <div class="form-group info-box">
+          <label for="angsuranTerhadapPendapatan"
+            >Angsuran terhadap Pendapatan</label
+          >
+          <input
+            id="angsuranTerhadapPendapatan"
+            type="text"
+            placeholder="-"
+            [value]="angsThdPdptCategory"
+            disabled
+          />
+        </div>
 
-      <!-- Kondisi Tempat Tinggal -->
-      <div class="form-group info-box">
-        <label for="statusTempatTinggal">Status Tempat Tinggal</label>
-        <select
-          id="statusTempatTinggal"
-          [(ngModel)]="statusTempatTinggal"
-          [disabled]="levelAkses !== 'CMO'"
-        >
-          <option value="null">- Pilih Status Tempat Tinggal -</option>
-          <option value="1">Kontrak</option>
-          <option value="2">Milik kerabat bukan keluarga inti</option>
-          <option value="3">Milik keluarga inti</option>
-          <option value="4">Milik sendiri</option>
-        </select>
-      </div>
-      <div class="form-group info-box">
-        <label for="kondisiTempatTinggal">Kondisi Tempat Tinggal</label>
-        <select
-          id="kondisiTempatTinggal"
-          [(ngModel)]="kondisiTempatTinggal"
-          [disabled]="levelAkses !== 'CMO'"
-        >
-          <option value="null">- Pilih Kondisi Tempat Tinggal -</option>
-          <option value="1">Kumuh</option>
-          <option value="2">Rumah sederhana semi permanen</option>
-          <option value="3">Rumah sederhana permanen</option>
-          <option value="4">Mewah</option>
-        </select>
-      </div>
+        <!-- Dropdown Row 1 -->
+        <div class="form-row">
+          <div class="form-group info-box">
+            <label for="statusPekerjaan">Status Pekerjaan</label>
+            <select
+              id="statusPekerjaan"
+              [(ngModel)]="statusPekerjaan"
+              [disabled]="
+                levelAkses !== 'CMO' ||
+                statusQUCA === 'ON REVIEW' || statusQUCA === 'APPROVED'
+              "
+            >
+              <option [value]="null">- Pilih Status Pekerjaan -</option>
+              <option [value]="1">Pegawai kontrak</option>
+              <option [value]="2">Freelance/ pengusaha UMKM</option>
+              <option [value]="3">Tetap sebagai staff</option>
+              <option [value]="4">Tetap sebagai atasan/ pengusaha besar</option>
+            </select>
+          </div>
 
-      <!-- Karakter di Lingkungan & Hasil SLIK -->
-      <div class="form-group info-box">
-        <label for="karakterLingkungan">Karakter di Lingkungan</label>
-        <select
-          id="karakterLingkungan"
-          [(ngModel)]="karakterDiLingkungan"
-          [disabled]="levelAkses !== 'CMO'"
-        >
-          <option value="null">- Pilih Karakter di Lingkungan -</option>
-          <option value="1">Dikenal buruk</option>
-          <option value="2">Dikenal namun tertutup</option>
-          <option value="3">Dikenal biasa saja</option>
-          <option value="4">Dikenal baik</option>
-        </select>
-      </div>
-      <div class="form-group info-box">
-        <label for="getContact">Get Contact</label>
-        <select
-          id="getContact"
-          [(ngModel)]="hasilGetContact"
-          [disabled]="levelAkses !== 'CMO'"
-        >
-          <option value="null">- Pilih Jumlah Tagar Get Contact -</option>
-          <option value="1">Nihil/ dikunci/ kurang dari 5</option>
-          <option value="2">5 - 50 tagar</option>
-          <option value="3">50 tagar keatas</option>
-          <option value="4">50 tagar keatas dan positif</option>
-        </select>
-      </div>
-      <div class="form-group info-box">
-        <label for="hasilSLIK">Hasil SLIK</label>
-        <select
-          id="hasilSLIK"
-          [(ngModel)]="hasilSLIK"
-          [disabled]="levelAkses !== 'CMO'"
-        >
-          <option value="null">- Pilih Hasil SLIK by RBS -</option>
-          <option value="1">RBS Not OK karena coll2 keatas</option>
-          <option value="2">Not OK/ nihil/ under 15 juta/ prematur</option>
-          <option value="3">OK B20</option>
-          <option value="4">OK C10 dan D0</option>
-        </select>
+          <div class="form-group info-box">
+            <label for="statusTempatTinggal">Status Tempat Tinggal</label>
+            <select
+              id="statusTempatTinggal"
+              [(ngModel)]="statusTempatTinggal"
+              [disabled]="
+                levelAkses !== 'CMO' ||
+                statusQUCA === 'ON REVIEW' || statusQUCA === 'APPROVED'
+              "
+            >
+              <option value="null">- Pilih Status Tempat Tinggal -</option>
+              <option value="1">Kontrak</option>
+              <option value="2">Milik kerabat bukan keluarga inti</option>
+              <option value="3">Milik keluarga inti</option>
+              <option value="4">Milik sendiri</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dropdown Row 2 -->
+        <div class="form-row">
+          <div class="form-group info-box">
+            <label for="kondisiTempatTinggal">Kondisi Tempat Tinggal</label>
+            <select
+              id="kondisiTempatTinggal"
+              [(ngModel)]="kondisiTempatTinggal"
+              [disabled]="
+                levelAkses !== 'CMO' ||
+                statusQUCA === 'ON REVIEW' || statusQUCA === 'APPROVED'
+              "
+            >
+              <option value="null">- Pilih Kondisi Tempat Tinggal -</option>
+              <option value="1">Kumuh</option>
+              <option value="2">Rumah sederhana semi permanen</option>
+              <option value="3">Rumah sederhana permanen</option>
+              <option value="4">Mewah</option>
+            </select>
+          </div>
+
+          <div class="form-group info-box">
+            <label for="karakterLingkungan">Karakter di Lingkungan</label>
+            <select
+              id="karakterLingkungan"
+              [(ngModel)]="karakterDiLingkungan"
+              [disabled]="
+                levelAkses !== 'CMO' ||
+                statusQUCA === 'ON REVIEW' || statusQUCA === 'APPROVED'
+              "
+            >
+              <option value="null">- Pilih Karakter di Lingkungan -</option>
+              <option value="1">Dikenal buruk</option>
+              <option value="2">Dikenal namun tertutup</option>
+              <option value="3">Dikenal biasa saja</option>
+              <option value="4">Dikenal baik</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dropdown Row 3 -->
+        <div class="form-row">
+          <div class="form-group info-box">
+            <label for="getContact">Get Contact</label>
+            <select
+              id="getContact"
+              [(ngModel)]="hasilGetContact"
+              [disabled]="
+                levelAkses !== 'CMO' ||
+                statusQUCA === 'ON REVIEW' || statusQUCA === 'APPROVED'
+              "
+            >
+              <option value="null">- Pilih Jumlah Tagar Get Contact -</option>
+              <option value="1">Nihil/ dikunci/ kurang dari 5</option>
+              <option value="2">5 - 50 tagar</option>
+              <option value="3">50 tagar keatas</option>
+              <option value="4">50 tagar keatas dan positif</option>
+            </select>
+          </div>
+          <div class="form-group info-box">
+            <label for="hasilSLIK">Hasil SLIK</label>
+            <select
+              id="hasilSLIK"
+              [(ngModel)]="hasilSLIK"
+              [disabled]="
+                levelAkses !== 'CMO' ||
+                statusQUCA === 'ON REVIEW' || statusQUCA === 'APPROVED'
+              "
+            >
+              <option value="null">- Pilih Hasil SLIK by RBS -</option>
+              <option value="1">RBS Not OK karena coll2 keatas</option>
+              <option value="2">Not OK/ nihil/ under 15 juta/ prematur</option>
+              <option value="3">OK B20</option>
+              <option value="4">OK C10 dan D0</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -325,19 +370,20 @@
     <!-- Reject Modal -->
     <div *ngIf="showRejectModal" class="modal">
       <div class="modal-content">
-        <h2>Reject Form</h2>
+        <h2 class="modal-title">Reject Form</h2>
         <label for="rejectNotes">Notes:</label>
         <textarea
           id="rejectNotes"
           [(ngModel)]="rejectNotes"
           placeholder="Enter rejection notes"
+          class="modal-textarea"
         ></textarea>
         <div class="modal-buttons">
-          <button mat-raised-button color="warn" (click)="rejectForm()">
-            Reject
+          <button class="modal-cancel-btn" (click)="closeRejectModal()">
+            Cancel
           </button>
-          <button mat-raised-button color="primary" (click)="approveForm()">
-            Approve
+          <button class="modal-reject-btn" (click)="rejectForm()">
+            Reject
           </button>
         </div>
       </div>

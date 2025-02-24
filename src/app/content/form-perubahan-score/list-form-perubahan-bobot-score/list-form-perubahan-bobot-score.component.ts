@@ -14,6 +14,7 @@ export class ListFormPerubahanBobotScoreComponent {
   filterStatus: string = ''; // Menyimpan status yang dipilih
   searchQuery: string = '';
   levelAkses: string = '';
+  isLoading: boolean = false;
 
   constructor(
     private scoreService: ScoreService,
@@ -21,6 +22,7 @@ export class ListFormPerubahanBobotScoreComponent {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.authService.loadSession();
     this.fetchData();
     this.levelAkses = this.authService.levelAkses;
@@ -32,6 +34,7 @@ export class ListFormPerubahanBobotScoreComponent {
       next: (resp) => {
         this.listForm = resp.data;
         this.applyFilter();
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('get list form error: ', error);

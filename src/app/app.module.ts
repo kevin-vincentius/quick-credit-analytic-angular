@@ -9,6 +9,7 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { ContentModule } from './content/content.module';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { CurrencyPipe } from './currency.pipe';
 
 const MODULES = {
   IMPORTANT: [AuthModule, ContentModule],
@@ -25,7 +26,7 @@ const MODULES = {
     ...MODULES.IMPORTANT,
     SharedModule,
   ],
-  providers: [BsModalService],
+  providers: [BsModalService, CurrencyPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

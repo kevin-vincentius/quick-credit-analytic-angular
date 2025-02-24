@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Pipe } from '@angular/core';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { QUCAService } from '../../../core/services/quca.service';
 import { IFormQUCA } from '../../../core/interfaces/i-form-quca';
@@ -17,10 +17,10 @@ export class FormQucaComponent {
   domisiliKonsumen: string = '';
   namaMarketingOfficer: string = '';
   namaKonsumen: string = '';
-  zipcode: number | null = null;
-  pendapatan: number | null = null;
-  tabungan: number | null = null;
-  angsuran: number | null = null;
+  zipcode: any = null;
+  pendapatan: number = 0;
+  tabungan: number = 0;
+  angsuran: number = 0;
   tabThdAngs: number | null = null;
   angsThdPdpt: number | null = null;
   statusPekerjaan: number | null = null;
@@ -150,9 +150,17 @@ export class FormQucaComponent {
         this.pendapatan = data.pendapatan;
         this.tabungan = data.tabungan;
         this.angsuran = data.angsuran;
+        console.log(resp);
+        
       },
       error: (error) => {
         console.error('get data mid error: ', error);
+        if(error.error.status === 409){
+          alert('MID sudah dipakai di form lain!')
+        }
+        if(error.error.status === 400){
+          alert('MID tidak ditemukan!')
+        }
       },
     });
   }
@@ -160,7 +168,6 @@ export class FormQucaComponent {
   convertToNumber(value: any): number {
     return Number(value) || 0;
   }
-
 
   getFormDetail(mid: number): void {
     this.qucaService.getFormByMID(mid).subscribe({
@@ -183,6 +190,8 @@ export class FormQucaComponent {
         this.hasilSLIK = data.hasilSLIK;
         this.totalScore = data.totalScore ? data.totalScore.toFixed(2) : null;
         this.statusQUCA = data.statusQUCA;
+        this.rejectNotes = data.notes;
+        console.log(this.rejectNotes)
         console.log(data.statusQUCA);
       },
       error: (err: any) => {
@@ -250,12 +259,11 @@ export class FormQucaComponent {
         console.log(response);
 
         if (response.status === 201) {
-          this.router
-            .navigateByUrl('/', { skipLocationChange: true })
-            .then(() => {
-              this.router.navigate([`form-quca/${this.mid}`]); // Reload the component
-            });
-          window.scrollTo(0, 0); // Scroll to top
+          setTimeout(() => {
+            this.router.navigate([`form-quca/${this.mid}`]); // Reload the component
+            window.scrollTo(0, 0);
+
+          }, 3000)
         }
         this.getFormDetail(this.mid);
       },

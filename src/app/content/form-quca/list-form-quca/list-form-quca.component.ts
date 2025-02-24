@@ -16,7 +16,7 @@ export class ListFormQucaComponent {
   listForm: IFormQUCA[] = [];
   filteredListForm: IFormQUCA[] = [];
   filterStatus: string = '';
-  // form!: IFormQUCA;
+  isLoading: boolean = false;
   searchQuery: string = '';
   levelAkses: string = '';
 
@@ -26,6 +26,7 @@ export class ListFormQucaComponent {
   ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.authService.loadSession();
     this.fetchData();
     this.levelAkses = this.authService.levelAkses;
@@ -46,6 +47,7 @@ export class ListFormQucaComponent {
         this.listForm = resp.body?.data;
         this.filteredListForm = [...this.listForm]; // Update filtered list
         console.log(this.listForm);
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('get list form error: ', error);
@@ -75,22 +77,25 @@ export class ListFormQucaComponent {
     this.filteredListForm = this.listForm.filter((form) => {
       // Pastikan nilai ada sebelum mengakses toLowerCase()
       const mid = form.mid ? String(form.mid) : ''; // Ensure `mid` is a string
-      const namaKonsumen = form.mid?.namaKonsumen ? String(form.mid.namaKonsumen).toLowerCase() : '';
-      const marketingOfficer = form.mid?.idMarketingOfficer?.namaLengkap ? String(form.mid.idMarketingOfficer.namaLengkap).toLowerCase() : '';
-      
+      const namaKonsumen = form.mid?.namaKonsumen
+        ? String(form.mid.namaKonsumen).toLowerCase()
+        : '';
+      const marketingOfficer = form.mid?.idMarketingOfficer?.namaLengkap
+        ? String(form.mid.idMarketingOfficer.namaLengkap).toLowerCase()
+        : '';
+
       // Filter berdasarkan status
       const matchesStatus =
         !this.filterStatus || form.statusQUCA === this.filterStatus;
-  
+
       // Filter berdasarkan input pencarian
       const matchesSearch =
         !this.searchQuery ||
         mid.includes(this.searchQuery.toLowerCase()) ||
         namaKonsumen.includes(this.searchQuery.toLowerCase()) ||
         marketingOfficer.includes(this.searchQuery.toLowerCase());
-  
+
       return matchesStatus && matchesSearch;
     });
   }
-  
 }

@@ -20,7 +20,7 @@
   min-height: calc(80vh - 100px);
 }
 
-h5{
+h5 {
   font-weight: 550 !important;
 }
 
@@ -28,7 +28,7 @@ h5{
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 10px;
-  border: 1px solid #d1e7dd !important
+  border: 1px solid #d1e7dd !important;
 }
 
 .filter-dropdown {
@@ -130,7 +130,7 @@ h5{
 }
 
 .status-approved {
-  background-color: d1e7dd;
+  background-color: #d1e7dd;
   color: #0f5132;
 }
 
@@ -140,7 +140,7 @@ h5{
 }
 
 .status-review {
-  background-color: cfe2ff;
+  background-color: #cfe2ff;
   color: #0a58ca;
 }
 
@@ -182,14 +182,24 @@ h5{
   min-width: 60px;
 }
 
-.score-approved{
-  color: #0f5132;
+.score-approved {
+  color: green;
 }
 
-.score-rwc{
+.score-rwc {
   color: orange;
 }
 
-.score-not-recommended{
+.score-not-recommended {
   color: red;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.status-badge{
+  font-weight: 600 !important;
 }
