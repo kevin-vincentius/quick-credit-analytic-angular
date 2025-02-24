@@ -6,12 +6,14 @@ import { provideHttpClient } from '@angular/common/http';
 import { MessageValidationComponent } from './components/message-validation/message-validation.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { NavbarRightComponent } from './layouts/navbar-right/navbar-right.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
     MessageValidationComponent,
     SidebarComponent,
     NavbarRightComponent,
+    UnauthorizedComponent,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   providers: [provideHttpClient()],

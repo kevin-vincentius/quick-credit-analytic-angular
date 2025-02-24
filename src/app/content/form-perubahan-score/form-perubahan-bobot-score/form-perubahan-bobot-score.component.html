@@ -1,1 +1,313 @@
-form-perubahan
+<div class="container custom-container py-4">
+  <h5 class="text-center mb-4">
+    Form Permohonan Setting Bobot Score Parameter
+  </h5>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+      <form>
+        <h5
+          class="text-center"
+          *ngIf="
+            statusFormPerubahan === 'APPROVED' ||
+            statusFormPerubahan === 'REJECTED'
+          "
+        >
+          {{ statusFormPerubahan }}
+        </h5>
+
+        <!-- Branch Selection -->
+        <div class="mb-4">
+          <label for="branch" class="form-label">Nama Cabang</label>
+          <select
+            *ngIf="!idFormPerubahan"
+            class="form-select"
+            id="branch"
+            name="selectedCabang"
+            [(ngModel)]="selectedCabang"
+            (ngModelChange)="getScoreCabang(selectedCabang?.idCabang)"
+          >
+            <option value="" disabled selected>- Pilih Cabang -</option>
+            <option *ngFor="let cabang of listCabang" [ngValue]="cabang">
+              {{ cabang.namaCabang }}
+            </option>
+          </select>
+
+          <input
+            *ngIf="idFormPerubahan"
+            type="text"
+            name="namaCabang"
+            placeholder="-"
+            class="form-control form-control-lg text-secondary h5"
+            [(ngModel)]="namaCabang"
+            disabled
+          />
+        </div>
+
+        <!-- Parameters Section -->
+        <!-- <h5 class="mb-3">Pembobotan</h5> -->
+        <div class="space-y-2">
+          <div class="d-flex justify-content-center align-items-center">
+            <!-- <span>Total Bobot Score:</span> -->
+            <span class="fs-4 fw-bold text-primary mb-3"
+              >{{ totalScore.toFixed(1) }}%</span
+            >
+          </div>
+          <div class="progress">
+            <div
+              class="progress-bar"
+              [class.bg-success]="totalScore === 100"
+              [class.bg-warning]="totalScore < 100"
+              [class.bg-danger]="totalScore > 100"
+              [style.width.%]="totalScore"
+            ></div>
+          </div>
+        </div>
+        <br>
+        <div class="row g-3 mb-4">
+          <!-- Parameter 1 -->
+          <div class="col-md-6">
+            <label for="param1" class="form-label"
+              >Tabungan terhadap angsuran</label
+            >
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                id="param1"
+                value="5"
+                name="newBobotTabThdAngs"
+                [(ngModel)]="newBobotTabThdAngs"
+                (ngModelChange)="calculateTotalScore()"
+                [disabled]="!!idFormPerubahan"
+                required
+              />
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+
+          <!-- Parameter 2 -->
+          <div class="col-md-6">
+            <label for="param2" class="form-label"
+              >Kondisi tempat tinggal</label
+            >
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                id="param2"
+                [value]="newBobotKondisiTempatTinggal"
+                name="newBobotKondisiTempatTinggal"
+                [(ngModel)]="newBobotKondisiTempatTinggal"
+                (ngModelChange)="calculateTotalScore()"
+                required
+                [disabled]="!!idFormPerubahan"
+              />
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+
+          <!-- Parameter 3 -->
+          <div class="col-md-6">
+            <label for="param3" class="form-label"
+              >Angsuran terhadap pendapatan</label
+            >
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                id="param3"
+                value="15"
+                name="newBobotAngsThdPdpt"
+                [(ngModel)]="newBobotAngsThdPdpt"
+                (ngModelChange)="calculateTotalScore()"
+                required
+                [disabled]="!!idFormPerubahan"
+              />
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+
+          <!-- Parameter 4 -->
+          <div class="col-md-6">
+            <label for="param4" class="form-label"
+              >Karakter di lingkungan</label
+            >
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                id="param4"
+                value="7.5"
+                name="newBobotKarakter"
+                [(ngModel)]="newBobotKarakter"
+                (ngModelChange)="calculateTotalScore()"
+                required
+                [disabled]="!!idFormPerubahan"
+              />
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+
+          <!-- Parameter 5 -->
+          <div class="col-md-6">
+            <label for="param5" class="form-label">Status pekerjaan</label>
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                id="param5"
+                value="12"
+                name="newBobotStatusPekerjaan"
+                [(ngModel)]="newBobotStatusPekerjaan"
+                (ngModelChange)="calculateTotalScore()"
+                required
+                [disabled]="!!idFormPerubahan"
+              />
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+
+          <!-- Parameter 6 -->
+          <div class="col-md-6">
+            <label for="param6" class="form-label">Hasil Cek Contact</label>
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                id="param6"
+                value="10"
+                name="newBobotHasilGetContact"
+                [(ngModel)]="newBobotHasilGetContact"
+                (ngModelChange)="calculateTotalScore()"
+                required
+                [disabled]="!!idFormPerubahan"
+              />
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+
+          <!-- Parameter 7 -->
+          <div class="col-md-6">
+            <label for="param7" class="form-label">Status tempat tinggal</label>
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                id="param7"
+                value="15"
+                name="newBobotStatusTempatTinggal"
+                [(ngModel)]="newBobotStatusTempatTinggal"
+                (ngModelChange)="calculateTotalScore()"
+                required
+                [disabled]="!!idFormPerubahan"
+              />
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+
+          <!-- Parameter 8 -->
+          <div class="col-md-6">
+            <label for="param8" class="form-label">Hasil SLIK</label>
+            <div class="input-group">
+              <input
+                type="number"
+                class="form-control"
+                id="param8"
+                value="18"
+                name="newBobotHasilSLIK"
+                [(ngModel)]="newBobotHasilSLIK"
+                (ngModelChange)="calculateTotalScore()"
+                required
+                [disabled]="!!idFormPerubahan"
+              />
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center" *ngIf="!idFormPerubahan">
+          <button
+            type="submit"
+            class="btn btn-primary px-4 py-2"
+            (click)="submitForm()"
+          >
+            Simpan
+          </button>
+        </div>
+
+        <!-- Reject and Approve Button -->
+        <div class="row">
+          <div
+            class="action-buttons"
+            *ngIf="
+              (statusFormPerubahan === 'ON REVIEW RM' && levelAkses !== 'BM') ||
+              (statusFormPerubahan === 'ON REVIEW DD' && levelAkses !== 'BM')
+            "
+          >
+            <button
+              class="btn btn-danger action-button col-md-6"
+              type="button"
+              (click)="openRejectModal()"
+              [disabled]="
+                !(
+                  (statusFormPerubahan === 'ON REVIEW RM' &&
+                    levelAkses === 'RM') ||
+                  (statusFormPerubahan === 'ON REVIEW DD' &&
+                    levelAkses === 'DD')
+                )
+              "
+            >
+              Reject
+            </button>
+            <button
+              class="btn btn-primary action-button col-md-6"
+              type="button"
+              (click)="approveForm()"
+              [disabled]="
+                !(
+                  (statusFormPerubahan === 'ON REVIEW RM' &&
+                    levelAkses === 'RM') ||
+                  (statusFormPerubahan === 'ON REVIEW DD' &&
+                    levelAkses === 'DD')
+                )
+              "
+            >
+              Approve
+            </button>
+          </div>
+        </div>
+
+        <!-- Reject Modal -->
+        <div *ngIf="showRejectModal" class="modal">
+          <div class="modal-content">
+            <h2>Konfirmasi Reject Form Pengajuan</h2>
+            <p>Apakah Anda yakin ingin menolak form pengajuan ini?</p>
+            <div class="modal-buttons">
+              <button class="btn btn-secondary" (click)="closeModal()">
+                Cancel
+              </button>
+              <button class="btn btn-danger" (click)="rejectForm()">
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Approve Modal -->
+        <div *ngIf="showApproveModal" class="modal">
+          <div class="modal-content">
+            <h2>Sukses Approve Form Pengajuan!</h2>
+            <p>Form pengajuan telah berhasil disetujui.</p>
+            <div class="modal-buttons">
+              <button class="btn btn-primary" (click)="closeModalAndNavigate()">
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

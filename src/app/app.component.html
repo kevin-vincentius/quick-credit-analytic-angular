@@ -4,10 +4,11 @@
 <div
   class="content-container"
   [ngStyle]="{
-    'margin-left': authService.isLoggedIn() ? '250px' : '0px',
     'margin-top': authService.isLoggedIn() ? navbarHeight + 'px' : '0px',
     padding: authService.isLoggedIn() ? '20px' : '0px'
   }"
+  [ngClass]="{ 'logged-in': authService.isLoggedIn() }"
+
 >
   <router-outlet></router-outlet>
 </div>

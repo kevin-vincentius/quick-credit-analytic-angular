@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { AuthenticationService } from '../../../core/services/authentication.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,19 +9,22 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
   isSidebarCollapsed: boolean = false; // Track the sidebar state
-
   currentRoute: string = ''; // Holds the active route
   menuItems = [
-    // { name: 'Home', route: '/home', icon: 'bi-house-door' },
-    // { name: 'My Bookings', route: '/my-bookings', icon: 'bi-bookmark' },
-    // { name: 'Profile', route: '/profile', icon: 'bi-person' },
-    // { name: 'ListBookings', route: '/list-bookings', icon: 'bi-list' },
-    // { name: 'User Management', route: '/user-management', icon: 'bi-person-lines-fill' },
     { name: 'Form QUCA', route: '/form-quca', icon: 'bi-journal-text' },
-    { name: 'Setting Bobot Score', route: '/setting-bobot-score', icon: 'bi-gear' },
+    {
+      name: 'Setting Bobot Score',
+      route: '/setting-bobot-score',
+      icon: 'bi-gear',
+    },
   ];
 
-  constructor(private router: Router) {}
+  filteredMenuItems: any = []; // To store the filtered menu items based on the user's role
+
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
     // Update `currentRoute` whenever the route changes
@@ -29,21 +33,20 @@ export class SidebarComponent implements OnInit {
         this.currentRoute = event.urlAfterRedirects;
       }
     });
+
+    const currentRole = this.authService.levelAkses;
+    if (currentRole === 'CMO') {
+      // CMO can only see 'Form QUCA'
+      this.filteredMenuItems = this.menuItems.filter(
+        (item) => item.route === '/form-quca'
+      );
+    } else if (currentRole === 'BM' || currentRole === 'RM' || currentRole === 'DD') {
+      // BM can see all menu items
+      this.filteredMenuItems = this.menuItems;
+    }
   }
 
   toggleSidebar(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;
   }
-
-  // Function to return icon based on route
-  // getIcon(route: string): string {
-  //   switch (route) {
-  //     case '/form-quca':
-  //       return 'form-quca';
-  //     case '/setting-bobot-score':
-  //       return 'setting-bobot-score';
-  //     default:
-  //       return 'home'; // Default icon
-  //   }
-  // }
 }

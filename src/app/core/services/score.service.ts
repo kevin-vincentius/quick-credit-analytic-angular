@@ -1,18 +1,16 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseHttpService } from './base-http.service';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
-import { IFormQUCA } from '../interfaces/i-form-quca';
-import { IApiResponse } from '../interfaces/i-api-response';
 import { AuthenticationService } from './authentication.service';
-import { IPagination } from '../interfaces/i-pagination';
-import { IMobileEntry } from '../interfaces/i-mobile-entry';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { identity, Observable } from 'rxjs';
+import { IApiResponse } from '../interfaces/i-api-response';
+import { IFormPerubahan } from '../interfaces/i-form-perubahan';
 
 @Injectable({
   providedIn: 'root',
 })
-export class QUCAService {
+export class ScoreService {
   private apiUrl: string;
 
   constructor(
@@ -21,26 +19,25 @@ export class QUCAService {
     private baseHttpService: BaseHttpService,
     private authService: AuthenticationService
   ) {
-    this.apiUrl = `${this.baseHttpService.baseURL}/api/v1/quick-credit-analytic`;
+    this.apiUrl = `${this.baseHttpService.baseURL}/api/v1/form-perubahan`;
   }
 
-  getListForm(): Observable<any> {
+  getListForm(): Observable<IApiResponse> {
     const sessionId = this.authService.sessionId;
     const headers = new HttpHeaders().set('X-Session', sessionId);
 
-    return this.http.get<any>(`${this.apiUrl}/get-list-form`, {
+    return this.http.get<any>(`${this.apiUrl}`, {
       headers,
       withCredentials: true,
-      observe: 'response',
     });
   }
 
-  getFormByMID(mid: number): Observable<IApiResponse> {
+  getListCabang(): Observable<IApiResponse> {
     const sessionId = this.authService.sessionId;
     const headers = new HttpHeaders().set('X-Session', sessionId);
 
-    return this.http.get<IApiResponse<IFormQUCA>>(
-      `${this.apiUrl}/get-form-detail/${mid}`,
+    return this.http.get<any>(
+      `${this.baseHttpService.baseURL}/api/v1/get-list-cabang`,
       {
         headers,
         withCredentials: true,
@@ -48,12 +45,12 @@ export class QUCAService {
     );
   }
 
-  getDataKonsumenByMID(mid: number): Observable<IApiResponse> {
+  getScoreCabang(idCabang: number): Observable<IApiResponse> {
     const sessionId = this.authService.sessionId;
     const headers = new HttpHeaders().set('X-Session', sessionId);
 
-    return this.http.get<IApiResponse<IMobileEntry>>(
-      `${this.apiUrl}/get-mid/${mid}`,
+    return this.http.get<any>(
+      `${this.baseHttpService.baseURL}/api/v1/get-branch-score/${idCabang}`,
       {
         headers,
         withCredentials: true,
@@ -61,39 +58,42 @@ export class QUCAService {
     );
   }
 
-  submitFormQUCA(reqFormQUCA: IFormQUCA): Observable<IApiResponse> {
+  getDetailFormPerubahan(idFormPerubahan: number): Observable<IApiResponse> {
+    const sessionId = this.authService.sessionId;
+    const headers = new HttpHeaders().set('X-Session', sessionId);
+
+    return this.http.get<any>(
+      `${this.baseHttpService.baseURL}/api/v1/form-perubahan/${idFormPerubahan}`,
+      {
+        headers,
+        withCredentials: true,
+      }
+    );
+  }
+
+  submitFormPerubahan(
+    reqFormPerubahan: IFormPerubahan
+  ): Observable<IApiResponse> {
     const sessionId = this.authService.sessionId;
     const headers = new HttpHeaders().set('X-Session', sessionId || '');
 
+    console.log(sessionId);
+
     return this.http.post<IApiResponse>(
-      `${this.apiUrl}/new-form`,
-      reqFormQUCA,
+      `${this.apiUrl}/add`,
+      reqFormPerubahan,
       {
         headers,
       }
     );
   }
 
-  updateFormQUCA(reqFormQUCA: IFormQUCA): Observable<IApiResponse>{
-    const sessionId = this.authService.sessionId;
-    const headers = new HttpHeaders().set('X-Session', sessionId || '');
-    const mid = reqFormQUCA.mid;
-
-    return this.http.post<IApiResponse>(
-      `${this.apiUrl}/update-form`,
-      reqFormQUCA,
-      {
-        headers,
-      }
-    );
-  }
-
-  approveFormQUCA(mid: number): Observable<IApiResponse> {
+  approveFormPerubahan(idFormPerubahan: number): Observable<IApiResponse> {
     const sessionId = this.authService.sessionId;
     const headers = new HttpHeaders().set('X-Session', sessionId || '');
 
     return this.http.post<IApiResponse>(
-      `${this.apiUrl}/approve-form/${mid}`,
+      `${this.apiUrl}/${idFormPerubahan}/approve`,
       {},
       {
         headers,
@@ -101,16 +101,13 @@ export class QUCAService {
     );
   }
 
-  rejectFormQUCA(mid: number, rejectNotes: string): Observable<IApiResponse> {
+  rejectFormPerubahan(idFormPerubahan: number): Observable<IApiResponse> {
     const sessionId = this.authService.sessionId;
     const headers = new HttpHeaders().set('X-Session', sessionId || '');
 
     return this.http.post<IApiResponse>(
-      `${this.apiUrl}/reject-form`,
-      {
-        mid: mid,
-        notes: rejectNotes,
-      },
+      `${this.apiUrl}/${idFormPerubahan}/reject`,
+      {},
       {
         headers,
       }

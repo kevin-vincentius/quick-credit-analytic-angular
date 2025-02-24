@@ -1,0 +1,143 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.custom-container {
+  max-width: 100% !important;
+  width: 100%;
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px 40px 50px 40px !important;
+}
+
+.card {
+  border: none;
+  /* box-shadow: 4px 4px 8px 8px rgba(0, 0, 0, 0.2) !important; Stronger and equal shadow on all corners */
+  padding: 20px;
+  border-radius: 20px;
+  min-height: calc(80vh - 100px);
+}
+
+.search-input {
+  /* max-width: 400px; */
+  width: 60%;
+  border-radius: 10px;
+  padding-left: 40px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.btn-add {
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 30%;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  border: 1px solid #d1e7dd !important
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: all 0.2s;
+}
+
+.table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-rm {
+  background-color: #fff3cd;
+  color: #995500;
+}
+
+/* Status: ON REVIEW DD */
+.status-dd {
+  background-color: #cfe2ff;
+  color: #0a58ca;
+}
+
+/* Status: APPROVED */
+.status-approved {
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+/* Status: REJECTED */
+.status-rejected {
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.pagination {
+  margin-bottom: 0;
+}
+
+.pagination .page-link {
+  border: none;
+  color: #6c757d;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin: 0 2px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.header-logo {
+  height: 40px;
+  width: auto;
+}
+
+.filter-dropdown {
+  width: 25%;
+}
+
+/* No Data Section */
+.no-data {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #6c757d;
+  padding: 30px 0;
+  /* background-color: #f8f9fa; */
+  border-radius: 8px;
+}
+
+.no-data i {
+  font-size: 1.5rem;
+  color: #ffc107; /* Icon color */
+}
+
+.no-data span {
+  font-weight: 600;
+  color: #6c757d;
+}

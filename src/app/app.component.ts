@@ -7,7 +7,7 @@ import { AuthenticationService } from './core/services/authentication.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  navbarHeight: number = 50; // Default value, adjust if navbar height changes dynamically
+  navbarHeight: number = 40; // Default value, adjust if navbar height changes dynamically
 
   constructor(public authService: AuthenticationService) {}
 

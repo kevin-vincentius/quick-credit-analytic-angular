@@ -3,7 +3,7 @@
     <img src="/img/logo.png" alt="Logo" class="logo-img" />
     <nav class="nav flex-column">
       <li
-        *ngFor="let item of menuItems"
+        *ngFor="let item of filteredMenuItems"
         class="nav-item mt-2 mb-2"
         [ngClass]="{ active: item.route === currentRoute }"
       >

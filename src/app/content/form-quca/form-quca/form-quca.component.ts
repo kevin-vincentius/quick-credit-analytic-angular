@@ -29,9 +29,12 @@ export class FormQucaComponent {
   karakterDiLingkungan: number | null = null;
   hasilGetContact: number | null = null;
   hasilSLIK: number | null = null;
-  currentForm!: IFormQUCA;
   isMidFromUrl: boolean = false; // Flag to track if MID is from the URL
   levelAkses: string = ''; // Add a property for storing user level
+  totalScore!: number;
+  statusQUCA!: string;
+  showRejectModal: boolean = false; // Flag to show the modal
+  rejectNotes: string = ''; // Variable to store rejection notes
 
   constructor(
     private route: ActivatedRoute,
@@ -43,14 +46,11 @@ export class FormQucaComponent {
   ngOnInit(): void {
     this.authService.loadSession();
 
-     // Get user level from session or user service
-     const levelAkses = this.authService.levelAkses; // Assuming you have a method to get the logged-in user
-     if (levelAkses) {
-       this.levelAkses = levelAkses; // Assign the user level here
-     }     
+    const levelAkses = this.authService.levelAkses; // Assuming you have a method to get the logged-in user
+    if (levelAkses) {
+      this.levelAkses = levelAkses; // Assign the user level here
+    }
 
-     console.log(levelAkses);
-     
     // Ambil MID dari URL
     this.route.paramMap.subscribe((paramMap) => {
       const midFromUrl = paramMap.get('mid');
@@ -59,6 +59,7 @@ export class FormQucaComponent {
         this.mid = Number(midFromUrl);
         this.isMidFromUrl = true;
         this.getFormDetail(this.mid);
+        console.log(this.statusQUCA);
       } else {
         this.isMidFromUrl = false;
       }
@@ -120,6 +121,16 @@ export class FormQucaComponent {
     }
   }
 
+  // Show the modal when Reject button is clicked
+  openRejectModal(): void {
+    this.showRejectModal = true;
+  }
+
+  // Close the modal without rejecting
+  closeRejectModal(): void {
+    this.showRejectModal = false;
+  }
+
   getDataMID(): void {
     this.qucaService.getDataKonsumenByMID(this.mid).subscribe({
       next: (resp) => {
@@ -166,6 +177,9 @@ export class FormQucaComponent {
         this.karakterDiLingkungan = data.karakterDiLingkungan;
         this.hasilGetContact = data.hasilGetContact;
         this.hasilSLIK = data.hasilSLIK;
+        this.totalScore = data.totalScore ? data.totalScore.toFixed(2) : null;
+        this.statusQUCA = data.statusQUCA;
+        console.log(data.statusQUCA);
       },
       error: (err: any) => {
         console.error('Error fetching form detail:', err);
@@ -173,7 +187,7 @@ export class FormQucaComponent {
     });
   }
 
-  submitFormQUCA(): void {
+  submitForm(): void {
     const reqFormQUCA: IFormQUCA = {
       mid: this.mid,
       tabThdAngs: this.tabThdAngs,
@@ -189,7 +203,7 @@ export class FormQucaComponent {
       next: (response) => {
         console.log('sukses submit form: ', response);
         // this.loadBookings();
-        if(response.status === 201){
+        if (response.status === 201) {
           this.router.navigate(['/form-quca']);
         }
       },
@@ -199,13 +213,71 @@ export class FormQucaComponent {
     });
   }
 
+  updateForm(): void {
+    const reqUpdateFormQUCA: IFormQUCA = {
+      mid: this.mid,
+      tabThdAngs: this.tabThdAngs,
+      angsThdPdpt: this.angsThdPdpt,
+      statusPekerjaan: this.statusPekerjaan,
+      statusTempatTinggal: this.statusTempatTinggal,
+      kondisiTempatTinggal: this.kondisiTempatTinggal,
+      karakterDiLingkungan: this.karakterDiLingkungan,
+      hasilGetContact: this.hasilGetContact,
+      hasilSLIK: this.hasilSLIK,
+    };
+
+    this.qucaService.updateFormQUCA(reqUpdateFormQUCA).subscribe({
+      next: (response) => {
+        console.log(response);
+
+        if (response.status === 201) {
+          this.router.navigate([`form-quca`]);
+        }
+        
+      },
+      error: (err) => {
+        console.error('error: ', err);
+      },
+    });
+  }
+
   approveForm(): void {
-    // Logic to approve the form
-    console.log('Form approved');
+    this.qucaService.approveFormQUCA(this.mid).subscribe({
+      next: (response) => {
+        console.log(response);
+
+        if (response.status === 201) {
+          this.router
+            .navigateByUrl('/', { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate([`form-quca/${this.mid}`]); // Reload the component
+            });
+          window.scrollTo(0, 0); // Scroll to top
+        }
+        this.getFormDetail(this.mid);
+      },
+      error: (err) => {
+        console.error('error: ', err);
+      },
+    });
   }
 
   rejectForm(): void {
-    // Logic to reject the form
-    console.log('Form rejected');
+    this.qucaService.rejectFormQUCA(this.mid, this.rejectNotes).subscribe({
+      next: (response) => {
+        console.log(response);
+
+        if (response.status === 200 || response.status === 201) {
+          this.router.navigate([`form-quca`]);
+          window.scrollTo(0, 0);
+          this.getFormDetail(this.mid);
+        }
+
+      },
+      error: (err) => {
+        console.error('error: ', err);
+      },
+    });
+    this.closeRejectModal();
   }
 }

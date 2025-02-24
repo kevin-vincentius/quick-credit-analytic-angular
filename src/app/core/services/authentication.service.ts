@@ -99,6 +99,8 @@ export class AuthenticationService {
 
   logout() {
     this._isLoggedIn = false;
+    localStorage.removeItem('levelAkses');
+    localStorage.removeItem('idUser');
     localStorage.removeItem('sessionId');
     localStorage.removeItem('namaLengkap');
   }
@@ -113,6 +115,8 @@ export class AuthenticationService {
       this._isLoggedIn = true;
       this._idUser = idUser || '';
       this._namaLengkap = namaLengkap || '';
+    } else {
+      this._isLoggedIn = false;
     }
   }
 

@@ -14,8 +14,11 @@ import { IMobileEntry } from '../../../core/interfaces/i-mobile-entry';
 })
 export class ListFormQucaComponent {
   listForm: IFormQUCA[] = [];
+  filteredListForm: IFormQUCA[] = [];
+  filterStatus: string = '';
   // form!: IFormQUCA;
   searchQuery: string = '';
+  levelAkses: string = '';
 
   constructor(
     private qucaService: QUCAService,
@@ -25,6 +28,8 @@ export class ListFormQucaComponent {
   ngOnInit(): void {
     this.authService.loadSession();
     this.fetchData();
+    this.levelAkses = this.authService.levelAkses;
+    this.filteredListForm = this.listForm;
   }
 
   isIMobileEntry(mid: any): mid is IMobileEntry {
@@ -39,6 +44,7 @@ export class ListFormQucaComponent {
     this.qucaService.getListForm().subscribe({
       next: (resp) => {
         this.listForm = resp.body?.data;
+        this.filteredListForm = [...this.listForm]; // Update filtered list
         console.log(this.listForm);
       },
       error: (error) => {
@@ -64,4 +70,27 @@ export class ListFormQucaComponent {
     if (score === '-') return '';
     return score < 2 ? 'score-low' : 'score-high';
   }
+
+  applyFilter(): void {
+    this.filteredListForm = this.listForm.filter((form) => {
+      // Pastikan nilai ada sebelum mengakses toLowerCase()
+      const mid = form.mid ? String(form.mid) : ''; // Ensure `mid` is a string
+      const namaKonsumen = form.mid?.namaKonsumen ? String(form.mid.namaKonsumen).toLowerCase() : '';
+      const marketingOfficer = form.mid?.idMarketingOfficer?.namaLengkap ? String(form.mid.idMarketingOfficer.namaLengkap).toLowerCase() : '';
+      
+      // Filter berdasarkan status
+      // const matchesStatus =
+      //   !this.filterStatus || form.statusFormPerubahan === this.filterStatus;
+  
+      // Filter berdasarkan input pencarian
+      const matchesSearch =
+        !this.searchQuery ||
+        mid.includes(this.searchQuery.toLowerCase()) ||
+        namaKonsumen.includes(this.searchQuery.toLowerCase()) ||
+        marketingOfficer.includes(this.searchQuery.toLowerCase());
+  
+      return matchesSearch;
+    });
+  }
+  
 }
