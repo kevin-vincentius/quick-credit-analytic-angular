@@ -1,3 +1,5 @@
+
+
 /* Layout */
 .container {
   display: flex;
@@ -313,4 +315,25 @@ textarea {
 
 .btn:hover {
   opacity: 0.8;
+}
+
+.score-approved{
+  color: #0f5132;
+  width: 80px; 
+  height: 80px; 
+  font-size: 1.5rem
+}
+
+.score-rwc{
+  color: orange;
+  width: 80px; 
+  height: 80px; 
+  font-size: 1.5rem
+}
+
+.score-not-recommended{
+  color: red;
+  width: 80px; 
+  height: 80px; 
+  font-size: 1.5rem
 }

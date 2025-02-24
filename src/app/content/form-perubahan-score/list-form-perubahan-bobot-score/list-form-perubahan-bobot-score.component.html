@@ -6,7 +6,6 @@
   <!-- Main Content Card -->
   <div class="card border-0 shadow-sm">
     <div class="card-body">
-
       <!-- Search and Actions Row -->
       <div class="row mb-4 align-items-center">
         <div class="col-md-6 mb-3 mb-md-0">
@@ -15,7 +14,7 @@
             <input
               type="text"
               class="form-control search-input"
-              placeholder="Cari data permohonan / kode cabang"
+              placeholder="Cari berdasarkan Kode Cabang / Nama Cabang / Nama Pengaju"
               [(ngModel)]="searchQuery"
               (input)="applyFilter()"
             />
@@ -23,7 +22,11 @@
         </div>
         <div class="col-md-6">
           <div class="d-flex justify-content-md-end align-items-center gap-2">
-            <select class="form-select filter-dropdown" [(ngModel)]="filterStatus" (change)="applyFilter()">
+            <select
+              class="form-select filter-dropdown"
+              [(ngModel)]="filterStatus"
+              (change)="applyFilter()"
+            >
               <option value="">Semua Status</option>
               <option value="ON REVIEW RM">On Review RM</option>
               <option value="ON REVIEW DD">On Review DD</option>

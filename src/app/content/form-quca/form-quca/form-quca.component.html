@@ -3,20 +3,66 @@
   <section class="form-container">
     <h2>Form Quick Credit Analytic</h2>
 
-    <!-- Score Description -->
-    <div class="score-info">
-      <img src="assets/score-icon.png" alt="Score Icon" class="score-icon" />
-      <div class="score-description">
-        <p>Deskripsi Score:</p>
-        <p><span class="recommended">Score 3 - 4: RECOMMENDED</span></p>
-        <p><span class="no-dp">Score 2 - 3: NO DP PAKET</span></p>
-        <p><span class="not-recommended">Score 1 - 2: NOT RECOMMENDED</span></p>
-        <p>{{ totalScore }}</p>
+    <!-- Wrapper untuk meter dan deskripsi -->
+    <div class="d-flex justify-content-center align-items-center mt-5 ">
+      <div class="flex items-center gap-4">
+        <!-- Score Description -->
+        <div class="row align-items-center">
+          <!-- Kolom Total Score -->
+          <div
+            class="col-auto d-flex flex-column justify-content-center align-items-center text-center"
+          >
+            <div
+              class="d-flex align-items-center justify-content-center rounded-circle bg-light fw-bold"
+              [ngClass]="{
+                'score-not-recommended': totalScore < 2,
+                'score-rwc': totalScore >= 2 && totalScore < 3,
+                'score-approved': totalScore >= 3
+              }"
+            >
+              {{ totalScore }}
+            </div>
+          </div>
+
+          <!-- Kolom Deskripsi -->
+          <div class="col">
+            <div class="d-flex align-items-center gap-2">
+              <div
+                class="rounded-circle bg-success"
+                style="width: 12px; height: 12px"
+              ></div>
+              <p class="mb-1">
+                <span class="fw-bold">3.0 - 4.0:</span>
+                <span class="text-success"> RECOMMENDED</span>
+              </p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <div
+                class="rounded-circle bg-warning"
+                style="width: 12px; height: 12px"
+              ></div>
+              <p class="mb-1">
+                <span class="fw-bold">2.0 - 3.0:</span>
+                <span class="text-warning"> NO DP PAKET</span>
+              </p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <div
+                class="rounded-circle bg-danger"
+                style="width: 12px; height: 12px"
+              ></div>
+              <p class="mb-0">
+                <span class="fw-bold">1.0 - 2.0:</span>
+                <span class="text-danger"> NOT RECOMMENDED</span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- MID Search -->
-    <div class="search-bar">
+    <div class="search-bar mt-5">
       <input
         type="text"
         [(ngModel)]="mid"
@@ -147,7 +193,9 @@
         />
       </div>
       <div class="form-group info-box">
-        <label for="angsuranTerhadapPendapatan">Angsuran terhadap Pendapatan</label>
+        <label for="angsuranTerhadapPendapatan"
+          >Angsuran terhadap Pendapatan</label
+        >
         <input
           id="angsuranTerhadapPendapatan"
           type="text"
@@ -158,7 +206,11 @@
       </div>
       <div class="form-group info-box">
         <label for="statusPekerjaan">Status Pekerjaan</label>
-        <select id="statusPekerjaan" [(ngModel)]="statusPekerjaan" [disabled]="levelAkses !== 'CMO'">
+        <select
+          id="statusPekerjaan"
+          [(ngModel)]="statusPekerjaan"
+          [disabled]="levelAkses !== 'CMO'"
+        >
           <option [value]="null">- Pilih Status Pekerjaan -</option>
           <option [value]="1">Pegawai kontrak</option>
           <option [value]="2">Freelance/ pengusaha UMKM</option>
@@ -170,7 +222,11 @@
       <!-- Kondisi Tempat Tinggal -->
       <div class="form-group info-box">
         <label for="statusTempatTinggal">Status Tempat Tinggal</label>
-        <select id="statusTempatTinggal" [(ngModel)]="statusTempatTinggal" [disabled]="levelAkses !== 'CMO'">
+        <select
+          id="statusTempatTinggal"
+          [(ngModel)]="statusTempatTinggal"
+          [disabled]="levelAkses !== 'CMO'"
+        >
           <option value="null">- Pilih Status Tempat Tinggal -</option>
           <option value="1">Kontrak</option>
           <option value="2">Milik kerabat bukan keluarga inti</option>
@@ -180,7 +236,11 @@
       </div>
       <div class="form-group info-box">
         <label for="kondisiTempatTinggal">Kondisi Tempat Tinggal</label>
-        <select id="kondisiTempatTinggal" [(ngModel)]="kondisiTempatTinggal" [disabled]="levelAkses !== 'CMO'">
+        <select
+          id="kondisiTempatTinggal"
+          [(ngModel)]="kondisiTempatTinggal"
+          [disabled]="levelAkses !== 'CMO'"
+        >
           <option value="null">- Pilih Kondisi Tempat Tinggal -</option>
           <option value="1">Kumuh</option>
           <option value="2">Rumah sederhana semi permanen</option>
@@ -192,7 +252,11 @@
       <!-- Karakter di Lingkungan & Hasil SLIK -->
       <div class="form-group info-box">
         <label for="karakterLingkungan">Karakter di Lingkungan</label>
-        <select id="karakterLingkungan" [(ngModel)]="karakterDiLingkungan" [disabled]="levelAkses !== 'CMO'">
+        <select
+          id="karakterLingkungan"
+          [(ngModel)]="karakterDiLingkungan"
+          [disabled]="levelAkses !== 'CMO'"
+        >
           <option value="null">- Pilih Karakter di Lingkungan -</option>
           <option value="1">Dikenal buruk</option>
           <option value="2">Dikenal namun tertutup</option>
@@ -202,7 +266,11 @@
       </div>
       <div class="form-group info-box">
         <label for="getContact">Get Contact</label>
-        <select id="getContact" [(ngModel)]="hasilGetContact" [disabled]="levelAkses !== 'CMO'">
+        <select
+          id="getContact"
+          [(ngModel)]="hasilGetContact"
+          [disabled]="levelAkses !== 'CMO'"
+        >
           <option value="null">- Pilih Jumlah Tagar Get Contact -</option>
           <option value="1">Nihil/ dikunci/ kurang dari 5</option>
           <option value="2">5 - 50 tagar</option>
@@ -212,7 +280,11 @@
       </div>
       <div class="form-group info-box">
         <label for="hasilSLIK">Hasil SLIK</label>
-        <select id="hasilSLIK" [(ngModel)]="hasilSLIK" [disabled]="levelAkses !== 'CMO'">
+        <select
+          id="hasilSLIK"
+          [(ngModel)]="hasilSLIK"
+          [disabled]="levelAkses !== 'CMO'"
+        >
           <option value="null">- Pilih Hasil SLIK by RBS -</option>
           <option value="1">RBS Not OK karena coll2 keatas</option>
           <option value="2">Not OK/ nihil/ under 15 juta/ prematur</option>
@@ -223,14 +295,31 @@
     </div>
 
     <!-- Buttons for user levels -->
-    <div *ngIf="levelAkses !== 'CMO' && isMidFromUrl && statusQUCA === 'ON REVIEW'" class="action-buttons">
-      <button class="btn btn-danger action-button" (click)="openRejectModal()">Reject</button>
-      <button class="btn btn-primary action-button" (click)="approveForm()">Approve</button>
+    <div
+      *ngIf="levelAkses !== 'CMO' && isMidFromUrl && statusQUCA === 'ON REVIEW'"
+      class="action-buttons"
+    >
+      <button class="btn btn-danger action-button" (click)="openRejectModal()">
+        Reject
+      </button>
+      <button class="btn btn-primary action-button" (click)="approveForm()">
+        Approve
+      </button>
     </div>
 
     <!-- Submit Button -->
-    <div *ngIf="!isMidFromUrl || (statusQUCA === 'NEED REVISION' && levelAkses === 'CMO')">
-      <button class="submit-button" (click)="isMidFromUrl ? updateForm() : submitForm()">Simpan</button>
+    <div
+      *ngIf="
+        !isMidFromUrl ||
+        (statusQUCA === 'NEED REVISION' && levelAkses === 'CMO')
+      "
+    >
+      <button
+        class="submit-button"
+        (click)="isMidFromUrl ? updateForm() : submitForm()"
+      >
+        Simpan
+      </button>
     </div>
 
     <!-- Reject Modal -->
@@ -238,10 +327,18 @@
       <div class="modal-content">
         <h2>Reject Form</h2>
         <label for="rejectNotes">Notes:</label>
-        <textarea id="rejectNotes" [(ngModel)]="rejectNotes" placeholder="Enter rejection notes"></textarea>
+        <textarea
+          id="rejectNotes"
+          [(ngModel)]="rejectNotes"
+          placeholder="Enter rejection notes"
+        ></textarea>
         <div class="modal-buttons">
-          <button mat-raised-button color="warn" (click)="rejectForm()">Reject</button>
-          <button mat-raised-button color="primary" (click)="approveForm()">Approve</button>
+          <button mat-raised-button color="warn" (click)="rejectForm()">
+            Reject
+          </button>
+          <button mat-raised-button color="primary" (click)="approveForm()">
+            Approve
+          </button>
         </div>
       </div>
     </div>

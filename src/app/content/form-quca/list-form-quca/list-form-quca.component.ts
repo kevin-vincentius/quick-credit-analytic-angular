@@ -79,8 +79,8 @@ export class ListFormQucaComponent {
       const marketingOfficer = form.mid?.idMarketingOfficer?.namaLengkap ? String(form.mid.idMarketingOfficer.namaLengkap).toLowerCase() : '';
       
       // Filter berdasarkan status
-      // const matchesStatus =
-      //   !this.filterStatus || form.statusFormPerubahan === this.filterStatus;
+      const matchesStatus =
+        !this.filterStatus || form.statusQUCA === this.filterStatus;
   
       // Filter berdasarkan input pencarian
       const matchesSearch =
@@ -89,7 +89,7 @@ export class ListFormQucaComponent {
         namaKonsumen.includes(this.searchQuery.toLowerCase()) ||
         marketingOfficer.includes(this.searchQuery.toLowerCase());
   
-      return matchesSearch;
+      return matchesStatus && matchesSearch;
     });
   }
   

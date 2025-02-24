@@ -18,9 +18,10 @@ body {
   min-height: calc(80vh - 100px);
 }
 
+
 .search-input {
   /* max-width: 400px; */
-  width: 60%;
+  width: 90%;
   border-radius: 10px;
   padding-left: 40px;
   background-color: #f8f9fa;
@@ -73,6 +74,7 @@ body {
   font-weight: 500;
 }
 
+/* Status: ON REVIEW RM */
 .status-rm {
   background-color: #fff3cd;
   color: #995500;

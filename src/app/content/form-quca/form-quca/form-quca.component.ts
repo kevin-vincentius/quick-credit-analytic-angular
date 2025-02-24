@@ -31,7 +31,7 @@ export class FormQucaComponent {
   hasilSLIK: number | null = null;
   isMidFromUrl: boolean = false; // Flag to track if MID is from the URL
   levelAkses: string = ''; // Add a property for storing user level
-  totalScore!: number;
+  totalScore: number = 0;
   statusQUCA!: string;
   showRejectModal: boolean = false; // Flag to show the modal
   rejectNotes: string = ''; // Variable to store rejection notes
@@ -64,6 +64,12 @@ export class FormQucaComponent {
         this.isMidFromUrl = false;
       }
     });
+  }
+
+  getScoreColor(score: number): string {
+    if (score <= 2) return 'text-red-500';
+    if (score <= 3) return 'text-yellow-500';
+    return 'text-green-500';
   }
 
   get fullAddress(): string {
@@ -144,7 +150,6 @@ export class FormQucaComponent {
         this.pendapatan = data.pendapatan;
         this.tabungan = data.tabungan;
         this.angsuran = data.angsuran;
-        this.updateCategories(); // Tambahkan ini
       },
       error: (error) => {
         console.error('get data mid error: ', error);
@@ -152,11 +157,10 @@ export class FormQucaComponent {
     });
   }
 
-  updateCategories(): void {
-    // Memicu ulang perhitungan kategori setelah data di-load
-    this.tabThdAngsCategory;
-    this.angsThdPdptCategory;
+  convertToNumber(value: any): number {
+    return Number(value) || 0;
   }
+
 
   getFormDetail(mid: number): void {
     this.qucaService.getFormByMID(mid).subscribe({
@@ -233,7 +237,6 @@ export class FormQucaComponent {
         if (response.status === 201) {
           this.router.navigate([`form-quca`]);
         }
-        
       },
       error: (err) => {
         console.error('error: ', err);
@@ -272,7 +275,6 @@ export class FormQucaComponent {
           window.scrollTo(0, 0);
           this.getFormDetail(this.mid);
         }
-
       },
       error: (err) => {
         console.error('error: ', err);
